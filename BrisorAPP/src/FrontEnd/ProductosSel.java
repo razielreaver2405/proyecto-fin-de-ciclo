@@ -85,31 +85,31 @@ public class ProductosSel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void IngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresoActionPerformed
-        IngresoProducto IP = new IngresoProducto();
+        /*IngresoProducto IP = new IngresoProducto();
         IP.setVisible(true);
-        setVisible(false);
+        setVisible(false);*/
     }//GEN-LAST:event_IngresoActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        ProductoPrecioEd PPE = new ProductoPrecioEd();
+        /*ProductoPrecioEd PPE = new ProductoPrecioEd();
         PPE.setVisible(true);
         try {
             PPE.ListarMenu("select * from tbl_menu;");
         } catch (SQLException ex) {
             Logger.getLogger(ProductosSel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        setVisible(false);
+        setVisible(false);*/
     }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-    EliminarProducto EP = new EliminarProducto();
+    /*EliminarProducto EP = new EliminarProducto();
     EP.setVisible(true);
         try {
             EP.ListarMenu("select * from tbl_menu;");
         } catch (SQLException ex) {
             Logger.getLogger(ProductosSel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        setVisible(false);
+        setVisible(false);*/
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtrasActionPerformed
