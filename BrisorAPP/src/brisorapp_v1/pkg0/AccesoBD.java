@@ -3,19 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package brisorapp_v1.pkg0;
+package brisorapp_v2.pkg0;
 
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author ElRonas-Mobile
  */
-public class Base_conexion_metodos {
-    private Connection Conectar = null;
-    private String Usuario;
-    private String Contrasena;
+public class AccesoBD {
+     private Connection Conectar = null;
+    private final String Usuario="root";
+    private final String Contrasena="Ronny2003";
     private final String bd = "sodabar_brisor";
     private final String ip = "localhost";
     private final String Puerto = "3306";
@@ -54,14 +58,4 @@ public class Base_conexion_metodos {
     public void CerrarBD() throws SQLException {
         Conectar.close();
     }
-
-    public void setUsuario(String Usuario) {
-        this.Usuario = Usuario;
-    }
-
-    public void setContrasena(String Contrasena) {
-        this.Contrasena = Contrasena;
-    }
-    
-    
 }
