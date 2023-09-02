@@ -20,11 +20,13 @@ public class Pedido {
     }
 
     public void setIDCliente(String apellido, String nombre) throws SQLException {
-        AccesoBD BD = new AccesoBD();
-        ResultSet ID = BD.Consulta("select IDC from tbl_cliente where nombre= '"+nombre+"' and apellido = '"+apellido+"';");
-        while(ID.next()){
-            IDCliente=ID.getInt(1);
+        AccesoBD BD = new AccesoBD();                                                                                               /*1.ta*/
+        ResultSet ID = BD.Consulta("select IDC from tbl_cliente where nombre= '"+nombre+"' and apellido = '"+apellido+"';");        /*2.ta*/
+        while(ID.next()){                                                                                                           /*3.tc*/
+            IDCliente=ID.getInt(1);                                                                                                 /*4.ta*/
         }
     }
-    
+    /*Tiempo Mejor Esperado: ta+ta+tc = 2ta+tc*/
+    /*Tiempo Peor Esperado: ta + tc + n*ta*/
+    /*Tiempo Promedio: (2ta+tc)+(ta+tc+n*ta)/2*/
 }
