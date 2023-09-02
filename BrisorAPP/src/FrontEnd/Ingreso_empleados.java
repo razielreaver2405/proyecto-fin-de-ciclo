@@ -129,22 +129,32 @@ public class Ingreso_empleados extends javax.swing.JFrame {
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
         try {
-            int cedu = Integer.parseInt(cedula.getText());
-            String nombre1 = nomb1.getText();
-            String nombre2 = nomb2.getText();
-            String apellido1 = Ape1.getText();
-            String apellido2 = ape2.getText();
-            Empleado Em = new Empleado(cedu, nombre1, nombre2, apellido1, apellido2);
-            AccesoBD BD = new AccesoBD();
-            BD.Establecer_conexion();
-            BD.actualizarBD("insert into tbl_empleado(IDE, nombre1, nombre2, PApellido, Mapellido) values(" + Em.getCedula() + " ,'" + Em.getNombre1() + "', '" + Em.getNombre2() + "', '" + Em.getApellidoPaterno() + "', '" + Em.getApellidoMaterno() + "');");
-            BD.CerrarBD();
-            MenuPrin MP = new MenuPrin();
-            MP.setVisible(true);
-            setVisible(false);
-        } catch (Exception e) {
+            int cedu = Integer.parseInt(cedula.getText());                                                          /*1.ta*/
+            String nombre1 = nomb1.getText();                                                                       /*2.ta*/
+            String nombre2 = nomb2.getText();                                                                       /*3.ta*/
+            String apellido1 = Ape1.getText();                                                                      /*4.ta*/
+            String apellido2 = ape2.getText();                                                                      /*5.ta*/
+            Empleado Em = new Empleado(cedu, nombre1, nombre2, apellido1, apellido2);                               /*6.ta*/
+            AccesoBD BD = new AccesoBD();                                                                           /*7.ta*/
+            BD.Establecer_conexion();                                                                               /*8.ta*/
+            BD.actualizarBD("insert into tbl_empleado(IDE, nombre1, nombre2, PApellido, Mapellido) values(" +       /*9.to*/
+                    Em.getCedula() + " ,'" + Em.getNombre1() + "', '" + Em.getNombre2() + "', '" + 
+                    Em.getApellidoPaterno() + "', '" + Em.getApellidoMaterno() + "');");
+            BD.CerrarBD();                                                                                          /*10.ta*/
+            MenuPrin MP = new MenuPrin();                                                                           /*11.ta*/
+            MP.setVisible(true);                                                                                    /*12.ta*/
+            setVisible(false);                                                                                      /*13.ta*/
+        } catch (Exception e) {                                                                                     /*14.to*/
             advertencia.setText("Error: Revise los datos ingresados");
         }
+        /*Mejor Tiempo Esperado (Tm):
+            Tm = ta + ta + ta + ta + ta + ta + to + to + ta + ta + ta + ta + ta + ta + ta
+            =13ta+2to*/
+        /*Peor Tiempo Esperado (Tw):
+            Tp = ta + ta + ta + ta + ta + ta + to + to + ta + ta + ta + to + ta + to + ta
+            =11ta+4to*/
+        /*Tiempo Promedio Esperado (Tp):
+            Tp = (Tm + Tw) / 2*/
     }//GEN-LAST:event_AceptarActionPerformed
 
     /**

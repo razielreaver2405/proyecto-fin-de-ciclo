@@ -29,25 +29,35 @@ public class ProductoPrecioEd extends javax.swing.JFrame {
     }
 
     public void ListarMenu(String Sql) throws SQLException {
-        MenuCB.removeAllItems();
-        ArrayList<Integer> IDM = new ArrayList<>();
-        ArrayList<String> PrecioNomb = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        AccesoBD BD = new AccesoBD();
-        BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta(Sql);
-        while (RSE.next()) {
-            IDM.add(RSE.getInt(1));
-            PrecioNomb.add(RSE.getString(2) + ": $" + RSE.getDouble(3));
-        }
-        for (int i = 0; i < IDM.size(); i++) {
-            String anidar = "ID: " + IDM.get(i) + " " + PrecioNomb.get(i);
-            MenuCB.addItem(Integer.toString(IDM.get(i)));
-            Modelo.add(i, anidar);
-        }
-        LMenu.setModel(Modelo);
-        BD.CerrarBD();
+        MenuCB.removeAllItems();                                            /*1.ta*/
+        ArrayList<Integer> IDM = new ArrayList<>();                         /*2.ta*/
+        ArrayList<String> PrecioNomb = new ArrayList<>();                   /*3.ta*/
+        DefaultListModel Modelo = new DefaultListModel();                   /*4.ta*/
+        AccesoBD BD = new AccesoBD();                                       /*5.ta*/
+        BD.Establecer_conexion();                                           /*6.ta*/
+        ResultSet RSE = BD.Consulta(Sql);                                   /*7.to*n*/
+        while (RSE.next()) {                                                /*8.tc+to*n*/
+            IDM.add(RSE.getInt(1));                                         /*9.ta*n*/
+            PrecioNomb.add(RSE.getString(2) + ": $" + RSE.getDouble(3));    /*10.ta*n*/
+        }                                                                   /*11.tc*/
+        for (int i = 0; i < IDM.size(); i++) {                              /*12.tc*n*/
+            String anidar = "ID: " + IDM.get(i) + " " + PrecioNomb.get(i);  /*13.ta+to*n*/
+            MenuCB.addItem(Integer.toString(IDM.get(i)));                   /*14.ta*n*/
+            Modelo.add(i, anidar);                                          /*15.ta*n*/
+        }                                                                   /*16.tc*/
+        LMenu.setModel(Modelo);                                             /*17.ta*/
+        BD.CerrarBD();                                                      /*18.ta*/
     }
+    /*Mejor tiempo esperado (Tm):
+        Tm = ta + ta + ta + (to * n) + (to * n) + (ta * n) + (tc * n) + (ta * n) + (ta * n) + ta + ta + ta
+        Tm = (7 * ta) + (3 * ta * n) + (2 * to * n) + (tc * n)*/
+
+    /*Peor tiempo esperado (Tp):
+        Tp = ta + ta + ta + (to * n) + (to * n) + (ta * n) + (tc * n) + (ta * n) + (ta * n) + ta + ta + ta
+        Tp = (7 * ta) + (3 * ta * n) + (2 * to * n) + (tc * n)*/
+
+    /*Tiempo promedio esperado (Tu):
+        Tu = (Tm+Tp)/2*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -122,7 +132,8 @@ public class ProductoPrecioEd extends javax.swing.JFrame {
         AccesoBD BD = new AccesoBD();
         try {
             BD.Establecer_conexion();
-            BD.actualizarBD("update tbl_Menu set Precio_unit = " + Double.parseDouble(precioNuevo.getText()) + " where IDM=" + Integer.parseInt((String) MenuCB.getSelectedItem()) + ";");
+            BD.actualizarBD("update tbl_Menu set Precio_unit = " + Double.parseDouble(precioNuevo.getText()) + 
+                    " where IDM=" + Integer.parseInt((String) MenuCB.getSelectedItem()) + ";");
             ListarMenu("select * from tbl_menu;");
             BD.CerrarBD();
         } catch (SQLException ex) {

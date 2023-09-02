@@ -39,71 +39,97 @@ public class Nuevo_Pedido extends javax.swing.JFrame {
     }
 
     public void setTotal() throws SQLException {
-        AccesoBD BD = new AccesoBD();
-        total=0;
-        BD.Establecer_conexion();
-        ResultSet RST;
-        RST=BD.Consulta("select sum(Precio_total) from tbl_menu_pedido where pedido=" + IDP + ";");
-        while (RST.next()) {            
-            total=RST.getDouble(1);
-        }
+        AccesoBD BD = new AccesoBD();                                                                   /*1.ta*/
+        total=0;                                                                                        /*2.ta*/
+        BD.Establecer_conexion();                                                                       /*3.ta*/
+        ResultSet RST;                                                                                  
+        RST=BD.Consulta("select sum(Precio_total) from tbl_menu_pedido where pedido=" + IDP + ";");     /*4.to*/
+        while (RST.next()) {                                                                            /*5.to*/
+            total=RST.getDouble(1);                                                                     /*6.ta*/
+        }                                                                                               /*7.tc*/
     }
-
+    /*Tiempo Esperado (Tm):
+        T = ta + ta + ta + to + to + ta + ta = (4 * ta) + (2 * to)*/
+    
     public void obtenerIDPedido() throws SQLException {
-        AccesoBD BD = new AccesoBD();
-        BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta("SELECT IDP FROM tbl_pedido ORDER BY IDP DESC LIMIT 1;");
-        while (RSE.next()) {
-            IDP = RSE.getInt(1);
+        AccesoBD BD = new AccesoBD();                                                               /*1.ta*/
+        BD.Establecer_conexion();                                                                   /*2.ta*/
+        ResultSet RSE = BD.Consulta("SELECT IDP FROM tbl_pedido ORDER BY IDP DESC LIMIT 1;");       /*3.to*/
+        while (RSE.next()) {                                                                        /*4.to*/
+            IDP = RSE.getInt(1);                                                                    /*5.ta*/
         }
     }
+    /*Tiempo Esperado (Tm):
+        T = ta + ta + to + to + ta = 3ta + 2to*/
 
     public void Obtenerprecio() throws SQLException {
-        AccesoBD BD = new AccesoBD();
-        BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta("select Precio_unit from tbl_Menu where IDM = " + Integer.parseInt((String) MenuCB.getSelectedItem()) + ";");
-        while (RSE.next()) {
-            Preciouni = RSE.getDouble(1);
+        AccesoBD BD = new AccesoBD();                                                                                                               /*1.ta*/
+        BD.Establecer_conexion();                                                                                                                   /*2.ta*/
+        ResultSet RSE = BD.Consulta("select Precio_unit from tbl_Menu where IDM = " + Integer.parseInt((String) MenuCB.getSelectedItem()) + ";");   /*3.to*n*/
+        while (RSE.next()) {                                                                                                                        /*4.*to*n/
+            Preciouni = RSE.getDouble(1);                                                                                                           /*5.ta*/
         }
     }
+    /*Mejor Tiempo Esperado (Tm):
+        Tm = ta + ta + to * n + to * n + ta + ta = 2ta + 2ta + 2to * n = 4ta + 2to * n
+
+    /*Peor Tiempo Esperado (Tp):
+        Tp = ta + ta + to * n + to * n + ta + ta = 2ta + 2ta + 2to * n = 4ta + 2to * n
+
+    /*Tiempo Promedio Esperado (Tu):
+        Tu = (Tm+Tp)/2*/
 
     public void ListarMenu(String Sql) throws SQLException {
-        MenuCB.removeAllItems();
-        ArrayList<Integer> IDM = new ArrayList<>();
-        ArrayList<String> PrecioNomb = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        AccesoBD BD = new AccesoBD();
-        BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta(Sql);
-        while (RSE.next()) {
-            IDM.add(RSE.getInt(1));
-            PrecioNomb.add(RSE.getString(2) + ": $" + RSE.getDouble(3));
+        MenuCB.removeAllItems();                                                /*1.ta*/
+        ArrayList<Integer> IDM = new ArrayList<>();                             /*2.ta*/
+        ArrayList<String> PrecioNomb = new ArrayList<>();                       /*3.ta*/
+        DefaultListModel Modelo = new DefaultListModel();                       /*4.ta*/
+        AccesoBD BD = new AccesoBD();                                           /*5.ta*/
+        BD.Establecer_conexion();                                               /*6.ta*/
+        ResultSet RSE = BD.Consulta(Sql);                                       /*7.to*/
+        while (RSE.next()) {                                                    /*8.to*n*/
+            IDM.add(RSE.getInt(1));                                             /*9.ta*n*/
+            PrecioNomb.add(RSE.getString(2) + ": $" + RSE.getDouble(3));        /*10.ta*n*/
         }
-        for (int i = 0; i < IDM.size(); i++) {
-            String anidar = "ID: " + IDM.get(i) + " " + PrecioNomb.get(i);
-            MenuCB.addItem(Integer.toString(IDM.get(i)));
-            Modelo.add(i, anidar);
+        for (int i = 0; i < IDM.size(); i++) {                                  /*11.tc*n*/
+            String anidar = "ID: " + IDM.get(i) + " " + PrecioNomb.get(i);      /*12.ta*n*/
+            MenuCB.addItem(Integer.toString(IDM.get(i)));                       /*13.ta*n*/
+            Modelo.add(i, anidar);                                              /*14.ta*n*/
         }
-        LMenu.setModel(Modelo);
-        BD.CerrarBD();
+        LMenu.setModel(Modelo);                                                 /*15.ta*/
+        BD.CerrarBD();                                                          /*16.ta*/
     }
+    /*Mejor Tiempo Esperado:
+        Tm = ta + ta + ta + ta + ta + ta + to + ta * n + ta * n + ta * n + ta * n + ta * n + ta * n + ta * n + ta + ta*/
+
+    /*Peor Tiempo Esperado:
+        Tp = ta + ta + ta + ta + ta + ta + to + ta * n + ta * n + ta * n + tc * n + ta * n + ta * n + ta * n + ta + ta*/
+
+    /*Tiempo Promedio Esperado:
+        Tu = (Tm + Tw) / 2*/
 
     public void ListarPedidoTotal() throws SQLException {
-        ArrayList<String> CadaUno = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        AccesoBD BD = new AccesoBD();
-        System.out.println(IDP + Integer.parseInt((String) MenuCB.getSelectedItem()));
-        BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta("select*from tbl_menu_pedido, tbl_Menu as M where pedido=" + IDP + " and M.IDM=menu;");
-        while (RSE.next()) {
-            CadaUno.add(RSE.getString(6) + "   x" + RSE.getInt(3) + "  Total: $" + RSE.getDouble(4));
+        ArrayList<String> CadaUno = new ArrayList<>();                                                                         /*1.ta*/
+        DefaultListModel Modelo = new DefaultListModel();                                                                      /*2.ta*/
+        AccesoBD BD = new AccesoBD();                                                                                          /*3.ta*/
+        System.out.println(IDP + Integer.parseInt((String) MenuCB.getSelectedItem()));                                         /*4.ta*/
+        BD.Establecer_conexion();                                                                                              /*5.ta*/
+        ResultSet RSE = BD.Consulta("select*from tbl_menu_pedido, tbl_Menu as M where pedido=" + IDP + " and M.IDM=menu;");    /*6.to*/
+        while (RSE.next()) {                                                                                                   /*7.to*/
+            CadaUno.add(RSE.getString(6) + "   x" + RSE.getInt(3) + "  Total: $" + RSE.getDouble(4));                          /*8.ta*n*/
         }
-        for (int i = 0; i < CadaUno.size(); i++) {
-            Modelo.add(i, CadaUno.get(i));
+        for (int i = 0; i < CadaUno.size(); i++) {                                                                             /*9.tc*n*/
+            Modelo.add(i, CadaUno.get(i));                                                                                     /*10.ta*n*/
         }
-        PedidoL.setModel(Modelo);
-        BD.CerrarBD();
+        PedidoL.setModel(Modelo);                                                                                              /*11.ta*/
+        BD.CerrarBD();                                                                                                         /*12.ta*/
     }
+    /*Mejor Tiempo Esperado (Tm):
+        Tm = ta + ta + ta + ta + ta + ta + to + ta * n + ta * n + ta * n + ta * n + ta * n + ta * n + ta * n + ta + ta*/
+    /*Peor Tiempo Esperado (Tp):
+        Tp = ta + ta + ta + ta + ta + ta + to + ta * n + ta * n + ta * n + tc * n + ta * n + ta * n + ta * n + ta + ta*/
+    /*Tiempo Promedio Esperado (Tu):
+        Tu = (Tm + Tw) / 2*/
 
     /**
      * This method is called from within the constructor to initialize the form.
