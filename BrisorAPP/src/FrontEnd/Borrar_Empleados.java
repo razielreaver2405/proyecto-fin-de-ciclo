@@ -29,23 +29,32 @@ public class Borrar_Empleados extends javax.swing.JFrame {
     }
 
     public void Listarempleados(String Sql) throws SQLException {
-        ArrayList<Integer> Cedula = new ArrayList<>();
-        ArrayList<String> NombreCompleto = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        AccesoBD BD = new AccesoBD();
+        ArrayList<Integer> Cedula = new ArrayList<>();                                                                                 /*1.ta*/
+        ArrayList<String> NombreCompleto = new ArrayList<>();                                                                          /*2.ta*/
+        DefaultListModel Modelo = new DefaultListModel();                                                                              /*3.ta*/
+        AccesoBD BD = new AccesoBD();                                                                                                  /*4.ta*/
         BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta(Sql);
-        while (RSE.next()) {
+        ResultSet RSE = BD.Consulta(Sql);                                                                                              /*5.to*n*/
+        while (RSE.next()) {                                                                                                           /*6.to*n*/
             Cedula.add(RSE.getInt(1));
-            NombreCompleto.add("  " + RSE.getString(2) + " " + RSE.getString(3) + " " + RSE.getString(4) + " " + RSE.getString(5));
+            NombreCompleto.add("  " + RSE.getString(2) + " " + RSE.getString(3) + " " + RSE.getString(4) + " " + RSE.getString(5));    /*7.ta*n*/
+        }                                                                                                                              /*8.tc*/
+        for (int i = 0; i < Cedula.size(); i++) {                                                                                      /*9.tc*n*/
+            String anidar = "Cedula: " + Cedula.get(i) + "   Nombre:" + NombreCompleto.get(i);                                         /*10.ta*/
+            Modelo.add(i, anidar);                                                                                                     /*11.ta*/
         }
-        for (int i = 0; i < Cedula.size(); i++) {
-            String anidar = "Cedula: " + Cedula.get(i) + "   Nombre:" + NombreCompleto.get(i);
-            Modelo.add(i, anidar);
-        }
-        EmpleadosList.setModel(Modelo);
+        EmpleadosList.setModel(Modelo);                                                                                                /*12.ta*/
         BD.CerrarBD();
     }
+    
+    /*Mejor tiempo esperado (Tm):
+        Tm = ta + ta + (to * n) + (to * n) + (ta * n) + (tc * n) + (ta * n) + ta + ta
+        Tm = (4 * ta) + (2 * ta * n) + (2 * to * n) + (tc * n)*/
+    /*Peor tiempo esperado (Tp):
+        Tp = ta + ta + (to * n) + (to * n) + (ta * n) + (tc * n) + (ta * n) + ta + ta
+        Tp = (4 * ta) + (2 * ta * n) + (2 * to * n) + (tc * n)*/
+    /*Tiempo promedio esperado (Tu):
+        Tu = (Tm+Tp)/2*/
 
     /**
      * This method is called from within the constructor to initialize the form.

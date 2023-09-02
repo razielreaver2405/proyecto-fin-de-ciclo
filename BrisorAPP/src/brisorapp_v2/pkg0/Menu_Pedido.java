@@ -15,13 +15,13 @@ public class Menu_Pedido {
     private double Precio_total;
 
     public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+        this.cantidad = cantidad;                          /*1.ta*/
     }
-
+    /*Coste de Tiempo: ta*/
     public void setPrecio_total(double precio) {
-        this.Precio_total=precio*getCantidad();
+        this.Precio_total=precio*getCantidad();            /*1.ta*/
     }
-
+    /*Coste de Tiempo: ta*/
     public int getCantidad() {
         return cantidad;
     }
