@@ -109,7 +109,7 @@ public class Pedidos_sel extends javax.swing.JFrame {
     }//GEN-LAST:event_ConsultaActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        /*Cliente_agg_sel CAS = new Cliente_agg_sel();
+        Cliente_agg_sel CAS = new Cliente_agg_sel();
         CAS.setOpcion(3);
         try {
             CAS.ListarClientes("select * from tbl_Cliente;");
@@ -117,7 +117,7 @@ public class Pedidos_sel extends javax.swing.JFrame {
             Logger.getLogger(Pedidos_sel.class.getName()).log(Level.SEVERE, null, ex);
         }
         CAS.setVisible(true);
-        setVisible(false);*/
+        setVisible(false);
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtrasActionPerformed
