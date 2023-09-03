@@ -29,23 +29,32 @@ public class Consulta_Empleados extends javax.swing.JFrame {
     }
 
     public void Listarempleados(String Sql) throws SQLException {
-        ArrayList<Integer> Cedula = new ArrayList<>();
-        ArrayList<String> NombreCompleto = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        AccesoBD BD = new AccesoBD();
-        BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta(Sql);
-        while (RSE.next()) {
-            Cedula.add(RSE.getInt(1));
-            NombreCompleto.add("  " + RSE.getString(2) + " " + RSE.getString(3) + " " + RSE.getString(4) + " " + RSE.getString(5));
+        ArrayList<Integer> Cedula = new ArrayList<>(); /*1.ta*/
+        ArrayList<String> NombreCompleto = new ArrayList<>();/*2.ta*/
+        DefaultListModel Modelo = new DefaultListModel();/*3.ta*/
+        AccesoBD BD = new AccesoBD();/*4.ta*/
+        BD.Establecer_conexion();/*5.to*/
+        ResultSet RSE = BD.Consulta(Sql);/*6.to*/
+        while (RSE.next()) { /*7.n*tc+tc*/
+            Cedula.add(RSE.getInt(1));/*8.to*/
+            NombreCompleto.add("  " + RSE.getString(2) + " " + RSE.getString(3) + " " + RSE.getString(4) + " " + RSE.getString(5)); /*9.to*/
         }
-        for (int i = 0; i < Cedula.size(); i++) {
-            String anidar = "Cedula: " + Cedula.get(i) + "   Nombre:" + NombreCompleto.get(i);
-            Modelo.add(i, anidar);
+        for (int i = 0; i < Cedula.size(); i++) {/*11.n*tc+tc*/
+            String anidar = "Cedula: " + Cedula.get(i) + "   Nombre:" + NombreCompleto.get(i);/*12.ta*/
+            Modelo.add(i, anidar);/*13.to*/
         }
-        EmpleadosList.setModel(Modelo);
-        BD.CerrarBD();
+        EmpleadosList.setModel(Modelo);/*15.to*/
+        BD.CerrarBD();/*16.to*/
     }
+    /*
+     Tempo mejor esperado: Tm
+    4ta+2to+n*(tc+2to)+tc+n*(ta+tc+to)+tc+2to
+    4ta + 2to + n*(tc+2to) + tc + n*(ta+tc+to) + tc + 2to
+    = 4ta + tc + tc + 2to + 2to + n*(tc+2to) + n*(ta+tc+to)
+    = 4ta + 2tc + 4to + n*(ta+tc+to)
+    = 4(ta + 0.5tc + to) + n*(ta+tc+to)
+    Tm= 4(ta + 0.5tc + to) + n*(ta + tc + to)
+    */
 
     /**
      * This method is called from within the constructor to initialize the form.

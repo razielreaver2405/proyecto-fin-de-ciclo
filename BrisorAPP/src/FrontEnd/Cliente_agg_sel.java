@@ -193,47 +193,58 @@ public class Cliente_agg_sel extends javax.swing.JFrame {
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiguienteActionPerformed
-        if (opcion == 1) {
-            Nuevo_Pedido NP = new Nuevo_Pedido();
+        if (opcion == 1) { /*1.n*tc*/
+            Nuevo_Pedido NP = new Nuevo_Pedido(); /*2.ta*/
             try {
-                AccesoBD BD = new AccesoBD();
-                BD.Establecer_conexion();
-                BD.actualizarBD("insert into tbl_pedido(Fecha, cliente) values(default, " + Integer.parseInt((String) ClienteCB.getSelectedItem()) + ");");
-                NP.ListarMenu("select * from tbl_menu;");
-                NP.CantidadCalculo();
-                BD.CerrarBD();
-            } catch (SQLException ex) {
-                java.util.logging.Logger.getLogger(Pedidos_sel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                AccesoBD BD = new AccesoBD(); /*3.ta*/
+                BD.Establecer_conexion();     /*4.to*/
+                BD.actualizarBD("insert into tbl_pedido(Fecha, cliente) values(default, " + Integer.parseInt((String) ClienteCB.getSelectedItem()) + ");");/*5.to*/
+                NP.ListarMenu("select * from tbl_menu;");/*6.to*/
+                NP.CantidadCalculo(); /*7.to*/
+                BD.CerrarBD();        /*8.to*/  
+            } catch (SQLException ex) { /*9.ta*/
+                java.util.logging.Logger.getLogger(Pedidos_sel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex); /*10.to*/
             }
 
-            NP.setVisible(true);
-            setVisible(false);
-        }else if(opcion == 2){
-            ConsultaPedidos CP = new ConsultaPedidos();
-            CP.setVisible(true);
+            NP.setVisible(true); /*12.ta*/
+            setVisible(false);   /*13.ta*/
+        }else if(opcion == 2){   /*15.n*tc*/
+            ConsultaPedidos CP = new ConsultaPedidos(); /*16.ta*/
+            CP.setVisible(true); /*17.ta*/
             try {
-                CP.ListarPedidos(Integer.parseInt((String) ClienteCB.getSelectedItem()));
-            } catch (SQLException ex) {
-                Logger.getLogger(Cliente_agg_sel.class.getName()).log(Level.SEVERE, null, ex);
+                CP.ListarPedidos(Integer.parseInt((String) ClienteCB.getSelectedItem())); /*17.to*/
+            } catch (SQLException ex) { /*18.ta*/
+                Logger.getLogger(Cliente_agg_sel.class.getName()).log(Level.SEVERE, null, ex);/*18.to*/
             }
-            setVisible(false);
-        }else if (opcion == 3){
-            EliminarPedido EP = new EliminarPedido();
-            EP.setVisible(true);
+            setVisible(false);/*20.ta*/
+        }else if (opcion == 3){ /*21.n*tc*/
+            EliminarPedido EP = new EliminarPedido(); /*22.ta*/
+            EP.setVisible(true);/*23.ta*/
             try {
-                EP.ListarPedidos(Integer.parseInt((String) ClienteCB.getSelectedItem()));
-            } catch (SQLException ex) {
-                Logger.getLogger(Cliente_agg_sel.class.getName()).log(Level.SEVERE, null, ex);
+                EP.ListarPedidos(Integer.parseInt((String) ClienteCB.getSelectedItem()));/*25.to*/
+            } catch (SQLException ex) { /*26.ta*/
+                Logger.getLogger(Cliente_agg_sel.class.getName()).log(Level.SEVERE, null, ex);/*27.to*/
             }
-            setVisible(false);
+            setVisible(false);/*29.ta*/
         }
 
     }//GEN-LAST:event_SiguienteActionPerformed
 
+    /*Mejor tiempo esperado: Tm
+    n*(5ta+tc+6to)+n*(6ta+tc+2to)+n*(4ta+tc+2to)
+    n * [(5ta+tc+6to) + (6ta+tc+2to) + (4ta+tc+2to)]
+    (5ta+tc+6to) + (6ta+tc+2to) + (4ta+tc+2to)
+    (5ta + 6ta + 4ta) + (tc + tc + tc) + (6to + 2to + 2to)
+    Tm=15ta + 3tc + 30to
+    */
+    
+    
+    
     private void AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtrasActionPerformed
-        Pedidos_sel PS = new Pedidos_sel();
-        PS.setVisible(true);
-        setVisible(false);
+        Pedidos_sel PS = new Pedidos_sel(); /*1.ta*/
+        PS.setVisible(true);                /*2.ta*/
+        setVisible(false);                  /*3.ta*/
+        /*Coste de Tiempo: 3ta*/
     }//GEN-LAST:event_AtrasActionPerformed
 
     private void RecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecargarActionPerformed

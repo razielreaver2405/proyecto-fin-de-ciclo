@@ -27,19 +27,30 @@ public class ConsultaPedidos extends javax.swing.JFrame {
     AccesoBD BD = new AccesoBD();
 
     public void ListarPedidos(int IDC) throws SQLException {
-        BD.Establecer_conexion();
-        ArrayList<String> PEI = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        ResultSet RS = BD.Consulta("select*from tbl_menu_pedido, tbl_pedido, tbl_menu where cliente = "+IDC+" and IDP=pedido;");
-        while (RS.next()) {
-            PEI.add(RS.getInt(1) + " / " + RS.getString(9) + " / " + RS.getDouble(10) + " / " + RS.getInt(3) + " / " + RS.getDouble(4));
+        BD.Establecer_conexion();/*1.to*/
+        ArrayList<String> PEI = new ArrayList<>();/*2.ta*/
+        DefaultListModel Modelo = new DefaultListModel();/*3.ta*/
+        ResultSet RS = BD.Consulta("select*from tbl_menu_pedido, tbl_pedido, tbl_menu where cliente = "+IDC+" and IDP=pedido;");/*4.ta*/
+        while (RS.next()) { /*5.n*tc+tc*/
+            PEI.add(RS.getInt(1) + " / " + RS.getString(9) + " / " + RS.getDouble(10) + " / " + RS.getInt(3) + " / " + RS.getDouble(4)); /*6.to*/
         }
-        for (int i = 0; i < PEI.size(); i++) {
-            Modelo.add(i, PEI.get(i));
+        for (int i = 0; i < PEI.size(); i++) { /*7.n*tc+tc*/
+            Modelo.add(i, PEI.get(i));/*8.to*/
         }
-        PedidosList.setModel(Modelo);
-        BD.CerrarBD();
+        PedidosList.setModel(Modelo);/*9.to*/
+        BD.CerrarBD();/*10.to*/
     }
+    
+    /*
+    Tiempo mejor esperado: Tm
+    3ta+n*(tc+to)+tc + n*(tc+to)+tc+2to
+    3ta + n*(tc+to) + tc + n*(tc+to) + tc + 2to
+    = (3ta + 2tc + 2to) + n*(tc+to) + n*(tc+to)
+    = 3ta + 2tc + 2to + n*(tc+to) + n*(tc+to)
+    = 3ta + 2tc + 2to + n*(2*(tc+to))
+    Tm= 3ta + 2tc + 2to + 2n*(tc+to)
+    
+    */
 
     /**
      * This method is called from within the constructor to initialize the form.
