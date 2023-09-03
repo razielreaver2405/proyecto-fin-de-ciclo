@@ -31,21 +31,33 @@ public class EliminarPedido extends javax.swing.JFrame {
     private int IDC;
 
     public void ListarPedidos(int IDC) throws SQLException {
-        BD.Establecer_conexion();
-        this.IDC = IDC;
-        ArrayList<String> PEI = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        ResultSet RS = BD.Consulta("select*from tbl_menu_pedido, tbl_pedido, tbl_menu where cliente = " + IDC + " and IDP=pedido;");
-        while (RS.next()) {
-            PEI.add(RS.getInt(1) + " / " + RS.getString(9) + " / " + RS.getDouble(10) + " / " + RS.getInt(3) + " / " + RS.getDouble(4));
+        BD.Establecer_conexion();                                                                                                          /*1.ta*/
+        this.IDC = IDC;                                                                                                                    /*2.ta*/
+        ArrayList<String> PEI = new ArrayList<>();                                                                                         /*3.ta*/
+        DefaultListModel Modelo = new DefaultListModel();                                                                                  /*4.ta*/
+        ResultSet RS = BD.Consulta("select*from tbl_menu_pedido, tbl_pedido, tbl_menu where cliente = " + IDC + " and IDP=pedido;");       /*5.to*/
+        while (RS.next()) {                                                                                                                /*6.to*n*/
+            PEI.add(RS.getInt(1) + " / " + RS.getString(9) + " / " + RS.getDouble(10) + " / " + RS.getInt(3) + " / " + RS.getDouble(4));   /*7.ta*n*/
+        } 
+        for (int i = 0; i < PEI.size(); i++) {                                                                                             /*8.tc*n*/
+            Modelo.add(i, PEI.get(i));                                                                                                     /*9.ta*n*/
         }
-        for (int i = 0; i < PEI.size(); i++) {
-            Modelo.add(i, PEI.get(i));
-        }
-        PedidosList.setModel(Modelo);
-        BD.CerrarBD();
+        PedidosList.setModel(Modelo);                                                                                                      /*10.ta*/
+        BD.CerrarBD();                                                                                                                     /*11.ta*/
     }
-
+    /*Mejor Tiempo Esperado (Tm):
+        Tm = ta + ta + ta + ta + to + ta
+        Tm = 5ta + to*/
+    /*Peor Tiempo Esperado (Tp):
+        Tp = ta + ta + ta + ta + to + ta + to + to * n + ta * n
+        Tp = 5ta + 2to + (to + ta) * n*/
+    /*Tiempo Promedio Esperado (Tu):
+        Tu = (Tm + Tp) / 2
+        Tu = (5ta + to + 5ta + 2to + (to + ta) * n) / 2
+        Tu = (10ta + 3to + (to + ta) * n) / 2
+        Tu = 5ta + 1.5to + (to + ta) * (n / 2)*/
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

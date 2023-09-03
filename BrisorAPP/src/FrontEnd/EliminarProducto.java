@@ -29,25 +29,38 @@ public class EliminarProducto extends javax.swing.JFrame {
     }
 
     public void ListarMenu(String Sql) throws SQLException {
-        MenuCB.removeAllItems();
-        ArrayList<Integer> IDM = new ArrayList<>();
-        ArrayList<String> PrecioNomb = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        AccesoBD BD = new AccesoBD();
-        BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta(Sql);
-        while (RSE.next()) {
-            IDM.add(RSE.getInt(1));
-            PrecioNomb.add(RSE.getString(2) + ": $" + RSE.getDouble(3));
+        MenuCB.removeAllItems();                                                /*1.ta*/
+        ArrayList<Integer> IDM = new ArrayList<>();                             /*2.ta*/
+        ArrayList<String> PrecioNomb = new ArrayList<>();                       /*3.ta*/
+        DefaultListModel Modelo = new DefaultListModel();                       /*4.ta*/
+        AccesoBD BD = new AccesoBD();                                           /*5.ta*/
+        BD.Establecer_conexion();                                               /*6.ta*/
+        ResultSet RSE = BD.Consulta(Sql);                                       /*7.to*n*/
+        while (RSE.next()) {                                                    /*8.to*n*/
+            IDM.add(RSE.getInt(1));                                             /*9.ta*n*/
+            PrecioNomb.add(RSE.getString(2) + ": $" + RSE.getDouble(3));        /*10.ta*n*/
         }
-        for (int i = 0; i < IDM.size(); i++) {
-            String anidar = "ID: " + IDM.get(i) + " " + PrecioNomb.get(i);
-            MenuCB.addItem(Integer.toString(IDM.get(i)));
-            Modelo.add(i, anidar);
+        for (int i = 0; i < IDM.size(); i++) {                                  /*11.tc*n*/
+            String anidar = "ID: " + IDM.get(i) + " " + PrecioNomb.get(i);      /*12.ta*n*/
+            MenuCB.addItem(Integer.toString(IDM.get(i)));                       /*13.ta*n*/
+            Modelo.add(i, anidar);                                              /*14.ta*n*/
         }
-        LMenu.setModel(Modelo);
-        BD.CerrarBD();
+        LMenu.setModel(Modelo);                                                 /*15.ta*/
+        BD.CerrarBD();                                                          /*16.ta*/
     }
+    /*Mejor Tiempo Esperado (Tm):
+        Tm = ta + ta + ta + ta + ta + ta + to + to + ta + ta + ta + ta + ta + ta + ta
+        Tm = 8ta + 2to
+
+    Peor Tiempo Esperado (Tp):
+        Tp = ta + ta + ta + ta + ta + ta + to + to + ta + ta + ta + to + ta + to + ta
+        Tp = 8ta + 3to
+
+    Tiempo Promedio Esperado (Tu):
+        Tu = (Tm + Tp) / 2
+        Tu = (8ta + 2to + 8ta + 3to) / 2
+        Tu = (16ta + 5to) / 2
+        Tu = 8ta + (5/2)to*/
 
     /**
      * This method is called from within the constructor to initialize the form.

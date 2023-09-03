@@ -97,19 +97,31 @@ public class NuevoCliente extends javax.swing.JFrame {
 
     private void IClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IClienteActionPerformed
         try {
-            AccesoBD BD = new AccesoBD();
-            int cedu = Integer.parseInt(CCedula.getText());
-            String nomb = CNombre.getText();
-            String apell = CApellido.getText();
-            Cliente C = new Cliente(cedu, nomb, apell);
-            BD.Establecer_conexion();
-            BD.actualizarBD("insert into tbl_Cliente(IDC, Nombre, Apellido) values(" + C.getCedula() + " , '" + C.getNombre() + "', '" + C.getApellido() + "');");
-            BD.CerrarBD();
-        } catch (SQLException ex) {
-            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
+            AccesoBD BD = new AccesoBD();                                                         /*1.ta*/
+            int cedu = Integer.parseInt(CCedula.getText());                                       /*2.ta*/
+            String nomb = CNombre.getText();                                                      /*3.ta*/
+            String apell = CApellido.getText();                                                   /*4.ta*/
+            Cliente C = new Cliente(cedu, nomb, apell);                                           /*5.ta*/
+            BD.Establecer_conexion();                                                             /*6.ta*/
+            BD.actualizarBD("insert into tbl_Cliente(IDC, Nombre, Apellido) values(" +            /*7.to*/
+                    C.getCedula() + " , '" + C.getNombre() + "', '" + C.getApellido() + "');");
+            BD.CerrarBD();                                                                        /*8.ta*/
+        } catch (SQLException ex) {                                                               /*9.ta*/
+            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);           
         }
 
-        setVisible(false);
+        setVisible(false);                                                                        /*10.ta*/
+        /*Mejor Tiempo Esperado (Tm):
+            Tm = ta + ta + ta + ta + ta + ta + to + ta
+            Tm = 7ta + to*/
+        /*Peor Tiempo Esperado (Tp):
+            Tp = ta + ta + ta + ta + ta + ta + to + ta + to
+            Tp = 8ta + 2to*/
+        /*Tiempo Promedio Esperado (Tu):
+            Tu = (Tm + Tp) / 2
+            Tu = (7ta + to + 8ta + 2to) / 2
+            Tu = (15ta + 3to) / 2
+            Tu = 7.5ta + 1.5to*/
     }//GEN-LAST:event_IClienteActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
