@@ -18,8 +18,10 @@ public class Menu {
         this.Nombre_pro = Nombre_pro;
     }
 
-    public void setPrecio_unit(double Precio_unit) {
-        this.Precio_unit = Precio_unit;
+   public void setPrecio_unit(double Precio_unit) {
+        this.Precio_unit = Precio_unit;/** 1 ta */
+        
+        /*Coste de Tiempo: ta*/  
     }
 
     public String getNombre_pro() {

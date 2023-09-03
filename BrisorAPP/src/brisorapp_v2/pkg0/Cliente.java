@@ -14,10 +14,11 @@ public class Cliente {
     private final String nombre;
     private final String apellido;
 
-    public Cliente(int Cedula, String nombre, String apellido) {
-        this.Cedula = Cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
+   public Cliente(int Cedula, String nombre, String apellido) {
+        this.Cedula = Cedula;                 /*1.ta*/
+        this.nombre = nombre;                 /*2.ta*/  
+        this.apellido = apellido;             /*3.ta*/
+        /*Coste de Tiempo: 3ta*/
     }
 
     public int getCedula() {

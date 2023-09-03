@@ -17,11 +17,12 @@ public class Empleado {
     private final String ApellidoMaterno;
 
     public Empleado(int Cedula, String Nombre1, String Nombre2, String ApellidoPaterno, String ApellidoMaterno) {
-        this.Cedula = Cedula;
-        this.Nombre1 = Nombre1;
-        this.Nombre2 = Nombre2;
-        this.ApellidoPaterno = ApellidoPaterno;
-        this.ApellidoMaterno = ApellidoMaterno;
+        this.Cedula = Cedula;                      /*1.ta*/
+        this.Nombre1 = Nombre1;                    /*2.ta*/
+        this.Nombre2 = Nombre2;                    /*3.ta*/
+        this.ApellidoPaterno = ApellidoPaterno;    /*4.ta*/
+        this.ApellidoMaterno = ApellidoMaterno;    /*5.ta*/
+         /*Coste de Tiempo: 5ta*/
     }
 
     public int getCedula() {
