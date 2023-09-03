@@ -34,25 +34,65 @@ public class Cliente_agg_sel extends javax.swing.JFrame {
     }
 
     public void ListarClientes(String Sql) throws SQLException {
-        ClienteCB.removeAllItems();
-        ArrayList<Integer> Cedula = new ArrayList<>();
-        ArrayList<String> NombreCompleto = new ArrayList<>();
-        DefaultListModel Modelo = new DefaultListModel();
-        AccesoBD BD = new AccesoBD();
-        BD.Establecer_conexion();
-        ResultSet RSE = BD.Consulta(Sql);
-        while (RSE.next()) {
-            Cedula.add(RSE.getInt(1));
-            NombreCompleto.add(RSE.getString(2) + " " + RSE.getString(3));
+        ClienteCB.removeAllItems();                                   /*1.ta*/
+        ArrayList<Integer> Cedula = new ArrayList<>();                /*2.ta*/
+        ArrayList<String> NombreCompleto = new ArrayList<>();         /*3.ta*/
+        DefaultListModel Modelo = new DefaultListModel();             /*4.ta*/
+        AccesoBD BD = new AccesoBD();                                 /*5.ta*/
+        BD.Establecer_conexion();                                     /*6.  */
+        ResultSet RSE = BD.Consulta(Sql);                             /*7.ta*/
+        while (RSE.next()) {                                          /*8.n*tc+tc*/
+            Cedula.add(RSE.getInt(1));                                /*9.n*to*/
+            NombreCompleto.add(RSE.getString(2) + " " + RSE.getString(3));/*10.n*to*/
         }
-        for (int i = 0; i < Cedula.size(); i++) {
-            String anidar = "Cedula: " + Cedula.get(i) + "   Nombre:" + NombreCompleto.get(i);
-            Modelo.add(i, anidar);
-            ClienteCB.addItem(Integer.toString(Cedula.get(i)));
+        for (int i = 0; i < Cedula.size(); i++) {                       /*11.n*tc+tc*/
+            String anidar = "Cedula: " + Cedula.get(i) + "   Nombre:" + NombreCompleto.get(i);/*12.n*to*/
+            Modelo.add(i, anidar);                                                            /*13.n*to*/
+            ClienteCB.addItem(Integer.toString(Cedula.get(i)));/*14. */
         }
-        LClientes.setModel(Modelo);
-        BD.CerrarBD();
+        LClientes.setModel(Modelo);/*15. */
+        BD.CerrarBD(); /*16. */
     }
+
+    /**
+     * Peor tiempo esperado (Tp):
+     *
+     * 5ta+ 3n*(tc+2to)+tc+3n*(ta+tc+2to)+tc
+     *
+     * 5ta + 3ntc + 6nto + tc + 3nta + 3ntc + 6n*to + tc
+     *
+     * (5ta + 3nta) + (3ntc + 3ntc + tc + tc) + (6nto + 6n*to)
+     *
+     * 5ta + 3nta = 8ta 3ntc + 3ntc + tc + tc = 8ntc 6nto + 6nto = 12n*to
+     *
+     * TP= 8ta + 8ntc + 12nto//
+     *
+     * Mejor tiempo esperado (Tm):
+     *
+     * 5ta+ 3n*(tc+2to)+tc
+     *
+     * 5ta+3n⋅tc+3n⋅2to+tc
+     *
+     * (5ta+tc)+(3n⋅tc+6n⋅to)
+     *
+     * 5ta+tc=(5ta+tc)
+     *
+     * 3n⋅tc+6n⋅to=3n⋅(tc+2to)
+     *
+     * Tm=5ta+3n⋅(tc+2to)
+     *
+     * Tiempo promedio esperado (Tu): 
+     * Tu = (Tm+Tp)/2*
+     * Tu= (5ta+3n⋅(tc+2to)+8ta+8ntc + 12nto)/2
+     *
+     * Tu= 13ta+3n⋅(tc+2to)+8n⋅tc+12n⋅to/2
+     *
+     * Tu= 13ta+3n⋅tc+6n⋅to+8n⋅tc+12n⋅to/2
+     *
+     * Tu= 13ta+(3n⋅tc+8n⋅tc)+(6n⋅to+12n⋅to)/2
+     *
+     * Tu= 13ta+11n⋅tc+18n⋅to/2      *
+     */
 
     /**
      * This method is called from within the constructor to initialize the form.
